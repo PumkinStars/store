@@ -27,8 +27,8 @@
                 <form
                         method="POST"
                         role="form"
-                        th:action="@{/login}"
-                        th:object="${userEntityDto}"
+                        th:action="@{/login/validate}"
+                        th:object="${userObj}"
                 >
                     <div class="form-group mb-3">
                         <label class="form-label">Username</label>

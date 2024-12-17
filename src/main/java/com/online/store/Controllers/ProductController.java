@@ -3,6 +3,7 @@ package com.online.store.Controllers;
 import com.online.store.Models.Product;
 import com.online.store.Services.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,11 +19,8 @@ public class ProductController {
     static final String EDIT_PRODUCT = "edit-product";
     static final String HOME_ENDPOINT = "redirect:/";
 
+    @Autowired
     ProductService productService;
-
-    public ProductController(ProductService productService) {
-        this.productService = productService;
-    }
 
     private String validateProduct(Product newProduct, Model model, String redirectPoint) {
         Optional<Product> existingProduct = productService.findById(newProduct.getId());
@@ -36,14 +34,14 @@ public class ProductController {
 
     }
 
-    @GetMapping("/new")
+    @GetMapping("admin/new")
     public String newProduct(Model model) {
         Product newProduct = new Product();
         model.addAttribute("newProduct", newProduct);
         return ADD_PRODUCT;
     }
 
-    @PostMapping("/save")
+    @PostMapping("admin/save")
     public String saveProduct(
             @Valid @ModelAttribute("newProduct") Product newProduct,
             BindingResult result,
@@ -78,7 +76,7 @@ public class ProductController {
 
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("admin/edit/{id}")
     public String getProductToEdit(@PathVariable Long id, Model model) {
         Optional<Product> productToEdit = productService.findById(id);
 
@@ -90,7 +88,7 @@ public class ProductController {
         }
     }
 
-    @PostMapping("/edit/save/{id}")
+    @PostMapping("admin/edit/save/{id}")
     public String saveEditedProduct(
             @PathVariable Long id,
             Model model,

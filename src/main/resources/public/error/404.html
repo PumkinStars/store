@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 Not Found</title>
+    <style>
+        /* Reset default styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        /* Center content */
+        .error-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100%;
+            text-align: center;
+        }
+
+        /* Error code styling */
+        .error-code {
+            font-size: 6rem;
+            font-weight: bold;
+            color: #e67e22;
+            margin: 0;
+        }
+
+        /* Error message */
+        .error-message {
+            font-size: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        /* Home button */
+        .home-button {
+            display: inline-block;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            background-color: #3498db;
+            color: #fff;
+            font-size: 1rem;
+            border-radius: 5px;
+            margin-top: 1.5rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .home-button:hover {
+            background-color: #2980b9;
+        }
+
+        /* Animation */
+        .fade-in {
+            animation: fadeIn 1.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Small illustration */
+        .illustration {
+            width: 250px;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+<div class="error-container fade-in">
+    <h1 class="error-code">404</h1>
+    <p class="error-message">Oops! The page you're looking for can't be found.</p>
+    <img class="illustration" src="https://via.placeholder.com/250x200?text=404+Image" alt="404 Illustration">
+    <a href="/" class="home-button">Return to Home</a>
+</div>
+</body>
+</html>
