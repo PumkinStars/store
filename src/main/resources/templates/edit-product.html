@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+          crossorigin="anonymous">
+</head>
+<body>
+<nav th:replace="~{fragments/navbar :: navbar}"></nav>
+<br /><br /><br />
+<div class="container">
+    <div class="row col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h2 class="text-center">Edit product</h2>
+            </div>
+            <div class="card-body">
+                <form
+                        method="POST"
+                        role="form"
+                        th:action="@{/products/edit/save/{id}(id=${productToEdit.id})}"
+                        th:object="${productToEdit}"
+                >
+                    <div class="form-group mb-3">
+                        <label class="form-label">Product name</label>
+                        <input
+                                class="form-control"
+                                id="name"
+                                name="name"
+                                placeholder="Enter name"
+                                th:field="*{name}"
+                                type="text"
+                        />
+                        <p th:errors="*{name}" class="text-danger"
+                           th:if="${#fields.hasErrors('name')}">error</p>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label class="form-label">Picture URL</label>
+                        <input
+                                class="form-control"
+                                id="pictureUrl"
+                                name="pictureUrl"
+                                placeholder="Picture URL"
+                                th:field="*{pictureUrl}"
+                                type="text"
+                        />
+                        <p th:errors = "*{pictureUrl}" class="text-danger"
+                           th:if="${#fields.hasErrors('pictureUrl')}">error</p>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Price ($)</label>
+                        <input
+                                class="form-control"
+                                id="price"
+                                name="price"
+                                placeholder="Price"
+                                th:field="*{price}"
+                                type="number"
+                        />
+                        <p th:errors = "*{price}" class="text-danger"
+                           th:if="${#fields.hasErrors('price')}">error</p>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Description</label>
+                        <input
+                                class="form-control"
+                                id="description"
+                                name="description"
+                                placeholder="Description"
+                                th:field="*{description}"
+                                type="text"
+                        />
+                        <p th:errors = "*{description}" class="text-danger"
+                           th:if="${#fields.hasErrors('description')}">error</p>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label class="form-label">Available amount</label>
+                        <input
+                                class="form-control"
+                                id="availableAmount"
+                                name="availableAmount"
+                                placeholder="Available amount"
+                                th:field="*{availableAmount}"
+                                  
+                                type="number"
+                        />
+                        <p th:errors = "*{availableAmount}" class="text-danger"
+                           th:if="${#fields.hasErrors('availableAmount')}">error</p>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit">Submit edit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
