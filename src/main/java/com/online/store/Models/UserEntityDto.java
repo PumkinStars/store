@@ -1,26 +1,19 @@
 package com.online.store.Models;
 
-
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-@Setter
 @Getter
-@Entity
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
-@Builder
-public class UserEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@AllArgsConstructor
+public class UserEntityDto {
     @NotBlank
     private String username;
     @NotBlank
     private String password;
+    @NotBlank
     private String email;
     private String roles;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Cart cart = new Cart();
+
 }

@@ -2,6 +2,7 @@ package com.online.store.Controllers;
 
 import com.online.store.Models.Product;
 import com.online.store.Services.ProductService;
+import com.online.store.Utility.GlobalEndpoints;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,30 +16,15 @@ import java.util.Optional;
 @Controller
 @RequestMapping("products")
 public class ProductController {
-    static final String ADD_PRODUCT = "add-product";
-    static final String EDIT_PRODUCT = "edit-product";
-    static final String HOME_ENDPOINT = "redirect:/";
-
     @Autowired
     ProductService productService;
 
-    private String validateProduct(Product newProduct, Model model, String redirectPoint) {
-        Optional<Product> existingProduct = productService.findById(newProduct.getId());
-
-        if(existingProduct.isEmpty()) {
-            return "redirect:" + redirectPoint;
-        } else {
-            model.addAttribute("productToEdit", existingProduct.get());
-            return EDIT_PRODUCT;
-        }
-
-    }
 
     @GetMapping("admin/new")
     public String newProduct(Model model) {
         Product newProduct = new Product();
         model.addAttribute("newProduct", newProduct);
-        return ADD_PRODUCT;
+        return GlobalEndpoints.ADD_PRODUCT.toString();
     }
 
     @PostMapping("admin/save")
@@ -56,11 +42,11 @@ public class ProductController {
         if(result.hasErrors())
         {
             model.addAttribute("newProduct", newProduct);
-            return ADD_PRODUCT;
+            return GlobalEndpoints.ADD_PRODUCT.toString();
         }
 
         productService.saveProduct(newProduct);
-        return ADD_PRODUCT;
+        return GlobalEndpoints.ADD_PRODUCT.toString();
     }
 
     @GetMapping("/{id}")
@@ -68,10 +54,10 @@ public class ProductController {
         Optional<Product> productToView = productService.findById(id);
 
         if(productToView.isEmpty()) {
-            return HOME_ENDPOINT;
+            return GlobalEndpoints.HOME.toString();
         } else {
             model.addAttribute("productToView", productToView.get());
-            return "view-product-details";
+            return GlobalEndpoints.VIEW_PRODUCT_DETAILS.toString();
         }
 
     }
@@ -81,10 +67,10 @@ public class ProductController {
         Optional<Product> productToEdit = productService.findById(id);
 
         if(productToEdit.isEmpty()) {
-            return HOME_ENDPOINT;
+            return GlobalEndpoints.HOME.toString();
         } else {
             model.addAttribute("productToEdit", productToEdit.get());
-            return EDIT_PRODUCT;
+            return GlobalEndpoints.EDIT_PRODUCT.toString();
         }
     }
 
@@ -97,10 +83,10 @@ public class ProductController {
 
         if(result.hasErrors()) {
             model.addAttribute("newProduct", editedProduct);
-            return EDIT_PRODUCT;
+            return GlobalEndpoints.EDIT_PRODUCT.toString();
         }
 
         productService.saveProduct(editedProduct);
-        return HOME_ENDPOINT;
+        return GlobalEndpoints.HOME_REDIRECT.toString();
     }
 }

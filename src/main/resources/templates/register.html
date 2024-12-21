@@ -27,7 +27,7 @@
                             method="POST"
                             role="form"
                             th:action="@{/register/save}"
-                            th:object="${userEntityDto}"
+                            th:object="${userDto}"
                     >
                         <div class="form-group mb-3">
                             <label class="form-label">Username</label>
@@ -70,19 +70,6 @@
                                th:if="${#fields.hasErrors('email')}">error</p>
                         </div>
 
-                        <div class="form-group mb-3">
-                            <label class="form-label">Address</label>
-                            <input
-                                    class="form-control"
-                                    id="address"
-                                    name="address"
-                                    placeholder="Enter address"
-                                    th:field="*{address}"
-                                    type="text"
-                            />
-                            <p th:errors = "*{address}" class="text-danger"
-                               th:if="${#fields.hasErrors('address')}">error</p>
-                        </div>
                         <div class="form-group">
                             <button class="btn btn-primary" type="submit">Register</button>
                             <span>Already registered? <a th:href="@{/login}">Login here</a></span>
