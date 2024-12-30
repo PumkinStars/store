@@ -32,7 +32,7 @@ public class CartItemServiceImpl implements CartItemService {
 
         Optional<Product> product = productRepository.findById(productId);;
         if(product.isEmpty()) {
-            return CartDatabaseMessages.USER_NOT_FOUND;
+            return CartDatabaseMessages.PRODUCT_NOT_FOUND;
         }
 
         CartItem newItem = CartItem.builder()

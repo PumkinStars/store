@@ -50,7 +50,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public String viewProduct(@PathVariable Long id, Model model) {
+    public String viewProduct(@PathVariable("id") Long id, Model model) {
         Optional<Product> productToView = productService.findById(id);
 
         if(productToView.isEmpty()) {
