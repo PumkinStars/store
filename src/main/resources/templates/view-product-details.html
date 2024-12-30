@@ -27,7 +27,7 @@
                 <div class="card-body">
                     <h2 class="card-title" th:text="${productToView.name}"></h2>
                     <p class="card-text" th:text="${productToView.description}"></p>
-                    <a class="btn btn-primary" th:href="@{/users/cart/add/{id}(id=${productToView.id})}" methods="post">Add to cart</a>
+                    <a class="btn btn-primary" th:href="@{/cart/add/{id}(id=${productToView.id})}" methods="post">Add to cart</a>
                 </div>
             </div>
             <!-- Nested row for non-featured blog posts-->

@@ -2,7 +2,7 @@ package com.online.store.Controllers;
 
 
 import com.online.store.Models.UserEntity;
-import com.online.store.Models.UserEntityDto;
+import com.online.store.Models.Dtos.UserEntityDto;
 import com.online.store.Services.UserEntityService;
 import com.online.store.Utility.GlobalEndpoints;
 import jakarta.validation.Valid;

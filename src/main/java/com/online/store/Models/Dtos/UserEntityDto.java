@@ -1,4 +1,4 @@
-package com.online.store.Models;
+package com.online.store.Models.Dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
@@ -7,6 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class UserEntityDto {
     @NotBlank
     private String username;

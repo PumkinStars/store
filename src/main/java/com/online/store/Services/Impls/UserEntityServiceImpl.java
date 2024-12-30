@@ -2,7 +2,7 @@ package com.online.store.Services.Impls;
 
 
 import com.online.store.Models.UserEntity;
-import com.online.store.Models.UserEntityDto;
+import com.online.store.Models.Dtos.UserEntityDto;
 import com.online.store.Repositories.UserEntityRepository;
 import com.online.store.Services.UserEntityService;
 import org.springframework.beans.factory.annotation.Autowired;

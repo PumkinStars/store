@@ -1,7 +1,7 @@
 package com.online.store.Services;
 
 import com.online.store.Models.UserEntity;
-import com.online.store.Models.UserEntityDto;
+import com.online.store.Models.Dtos.UserEntityDto;
 
 import java.util.Optional;
 

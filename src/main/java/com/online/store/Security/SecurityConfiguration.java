@@ -25,9 +25,15 @@ public class SecurityConfiguration {
        return httpSecurity
                .csrf(AbstractHttpConfigurer::disable)
                .authorizeHttpRequests(registry -> {
-                   registry.requestMatchers("/", "/register/**", "/login/**").permitAll();
+                   registry.requestMatchers("/", "/register/**").permitAll();
                    registry.requestMatchers("/admin/**").hasRole("ADMIN");
+                   registry.requestMatchers("/cart**").hasRole("USER");
                    registry.anyRequest().authenticated();
+               })
+               .formLogin(httpSecurityFormLoginConfigurer -> {
+                   httpSecurityFormLoginConfigurer
+                           .loginPage("/login")
+                           .loginProcessingUrl("/login/validate").permitAll();
                })
                .build();
     }

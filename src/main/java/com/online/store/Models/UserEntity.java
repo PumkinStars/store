@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
+import java.util.List;
+
 @Setter
 @Getter
 @Entity
@@ -21,6 +23,4 @@ public class UserEntity {
     private String password;
     private String email;
     private String roles;
-    @OneToOne(cascade = CascadeType.ALL)
-    private Cart cart = new Cart();
 }
