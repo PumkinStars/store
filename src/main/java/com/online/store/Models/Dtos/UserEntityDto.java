@@ -9,12 +9,11 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UserEntityDto {
-    @NotBlank
+    @NotBlank(message = "Username required")
     private String username;
-    @NotBlank
+    @NotBlank(message = "Password required")
     private String password;
-    @NotBlank
+    @NotBlank(message = "Email required")
     private String email;
     private String roles;
-
 }

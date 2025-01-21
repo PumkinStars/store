@@ -18,23 +18,24 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserEntityRepository userEntityRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<UserEntity> user = userEntityRepository.findByUsername(username);
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        Optional<UserEntity> user = userEntityRepository.findByEmail(email);
+
         if(user.isPresent()) {
             UserEntity userObj = user.get();
             return User.builder()
-                    .username(userObj.getUsername())
+                    .username(userObj.getEmail())
                     .password(userObj.getPassword())
                     .roles(getRoles(userObj))
                     .build();
         } else {
-            throw new UsernameNotFoundException(username);
+            throw new UsernameNotFoundException(email);
         }
     }
 
     public String[] getRoles(UserEntity user) {
         if(user.getRoles().isEmpty()) {
-            return new String[]{"USER"};
+            return new String[]{"CUSTOMER"};
         }
         return user.getRoles().split(",");
     }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
@@ -11,11 +11,13 @@
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link me-3 btn btn-primary" th:href="@{/admin/users-list}">Users list</a></li>
-                <li class="nav-item"><a class="nav-link me-3 btn btn-primary" th:href="@{/products/admin/new}">New product</a></li>
-                <li class="nav-item"><a class="nav-link me-3 btn btn-primary" th:href="@{/login}">Login</a></li>
-                <li class="nav-item"><a class="nav-link btn btn-primary" th:href="@{/register}">Register</a></li>
-                <li class="nav-item"><a class="nav-link btn btn-primary" th:href="@{/cart}">Cart</a></li>
+                <li class="nav-item"><a class="nav-link me-3 btn btn-primary" th:href="@{/users-list}">Users list</a></li>
+                <li class="nav-item"><a class="nav-link me-3 btn btn-primary" th:href="@{/products/new}">New product</a></li>
+                <th:block sec:authorize="!isAuthenticated()">
+                    <li class="nav-item"><a class="nav-link me-3 btn btn-primary" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a></li>
+                    <li class="nav-item"><a class="nav-link btn btn-primary" sec:authorize="!isAuthenticated()" th:href="@{/register}">Register</a></li>
+                </th:block>
+                <li class="nav-item"><a class="nav-link btn btn-primary" th:href="@{/cart/view}">Cart</a></li>
                 <li class="nav-item dropdown">
                     <ul  class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
                         <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>

@@ -1,10 +1,17 @@
 package com.online.store.Controllers;
 
+import com.online.store.Models.Dtos.ProductDto;
 import com.online.store.Models.Product;
+import com.online.store.Models.UserEntity;
+import com.online.store.Security.IAuthenticationFacade;
 import com.online.store.Services.ProductService;
+import com.online.store.Services.UserEntityService;
 import com.online.store.Utility.GlobalEndpoints;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,18 +25,26 @@ import java.util.Optional;
 public class ProductController {
     @Autowired
     ProductService productService;
+    @Autowired
+    IAuthenticationFacade authenticationFacade;
+    @Autowired
+    UserEntityService userEntityService;
 
-
-    @GetMapping("admin/new")
+    @Secured("ADMIN")
+    @GetMapping("/new")
     public String newProduct(Model model) {
-        Product newProduct = new Product();
+        Authentication authedUser = authenticationFacade.getAuthentication();
+        Optional<UserEntity> user = userEntityService.findByEmail(authedUser.getName());
+        System.out.println(authedUser.getAuthorities());
+
+        ProductDto newProduct = new ProductDto();
         model.addAttribute("newProduct", newProduct);
         return GlobalEndpoints.ADD_PRODUCT.toString();
     }
-
-    @PostMapping("admin/save")
+    @RolesAllowed("ADMIN")
+    @PostMapping("/save")
     public String saveProduct(
-            @Valid @ModelAttribute("newProduct") Product newProduct,
+            @Valid @ModelAttribute("newProduct") ProductDto newProduct,
             BindingResult result,
             Model model) {
 
@@ -56,29 +71,33 @@ public class ProductController {
         if(productToView.isEmpty()) {
             return GlobalEndpoints.HOME.toString();
         } else {
-            model.addAttribute("productToView", productToView.get());
+            model.addAttribute(
+                    "productToView",
+                    productService.productToDto(productToView.get())
+            );
             return GlobalEndpoints.VIEW_PRODUCT_DETAILS.toString();
         }
 
     }
 
-    @GetMapping("admin/edit/{id}")
+    @Secured("ADMIN")
+    @GetMapping("/edit/{id}")
     public String getProductToEdit(@PathVariable Long id, Model model) {
         Optional<Product> productToEdit = productService.findById(id);
 
         if(productToEdit.isEmpty()) {
             return GlobalEndpoints.HOME.toString();
         } else {
-            model.addAttribute("productToEdit", productToEdit.get());
+            model.addAttribute("productToEdit", productService.productToDto(productToEdit.get()));
             return GlobalEndpoints.EDIT_PRODUCT.toString();
         }
     }
-
-    @PostMapping("admin/edit/save/{id}")
+    @Secured("ADMIN")
+    @PostMapping("/edit/save/{id}")
     public String saveEditedProduct(
             @PathVariable Long id,
             Model model,
-            @Valid @ModelAttribute("productToEdit") Product editedProduct,
+            @Valid @ModelAttribute("productToEdit") ProductDto editedProduct,
             BindingResult result) {
 
         if(result.hasErrors()) {

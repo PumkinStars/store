@@ -1,20 +1,17 @@
 package com.online.store;
 
 import com.github.javafaker.Faker;
+import com.online.store.Models.Dtos.ProductDto;
 import com.online.store.Models.Dtos.UserEntityDto;
-import com.online.store.Models.Product;
-import com.online.store.Models.UserEntity;
-import com.online.store.Repositories.ProductRepository;
-import com.online.store.Repositories.UserEntityRepository;
 import com.online.store.Services.ProductService;
 import com.online.store.Services.UserEntityService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.Random;
+import java.text.DecimalFormat;
+
 
 @SpringBootApplication
 public class StoreApplication {
@@ -25,6 +22,7 @@ public class StoreApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(StoreApplication.class, args);
+
 	}
 
 
@@ -36,10 +34,12 @@ public class StoreApplication {
 		for(int i = 0; i < 5; i++) {
 			String name = faker.artist().name();
 			String description = faker.gameOfThrones().quote();
-			Double price = Math.random() * 100;
-			Integer availAmount = Math.toIntExact(Math.round(Math.random() * 100));
+			double price = Math.random() * 100;
+			DecimalFormat numberFormat = new DecimalFormat("#.00");
+			price = Double.parseDouble(numberFormat.format(price));
+			Integer availAmount = (int) Math.floor(Math.random() * 100);
 
-			Product product = Product.builder()
+			ProductDto product = ProductDto.builder()
 					.name(name)
 					.description(description)
 					.price(price)
@@ -52,8 +52,15 @@ public class StoreApplication {
 				.username("PumkinStars")
 				.email("blah@gmail.com")
 				.password("123")
-				.roles("ADMIN,USER")
+				.roles("ADMIN,CUSTOMER")
+				.build();
+		UserEntityDto user2 = UserEntityDto.builder()
+				.username("username")
+				.email("kolobooi5@gmail.com")
+				.password("123")
+				.roles("CUSTOMER")
 				.build();
 		userEntityService.saveUser(user);
+		userEntityService.saveUser(user2);
 	}
 }
