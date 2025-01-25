@@ -7,7 +7,7 @@ public enum GlobalEndpoints {
             return "HOME";
         }
     },
-    HOME_REDIRECT {
+    BASE_REDIRECT {
         @Override
         public String toString() {
             return "redirect:/";
@@ -53,6 +53,18 @@ public enum GlobalEndpoints {
         @Override
         public String toString() {
             return "redirect:/register?fail";
+        }
+    },
+    FORBIDDEN_ERROR {
+        @Override
+        public String toString() {
+            return "403";
+        }
+    },
+    NOT_FOUND_ERROR {
+        @Override
+        public String toString() {
+            return "404";
         }
     }
 }

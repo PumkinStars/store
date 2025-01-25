@@ -2,12 +2,11 @@ package com.online.store.Controllers;
 
 
 import com.online.store.Models.Dtos.ProductDto;
-import com.online.store.Models.UserEntity;
+import com.online.store.Models.Dtos.UserEntityDto;
 import com.online.store.Security.IAuthenticationFacade;
 import com.online.store.Services.CartItemService;
 import com.online.store.Services.UserEntityService;
 import com.online.store.Utility.CartDatabaseMessages;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.core.Authentication;
@@ -21,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 import java.util.Optional;
 
-@Secured("CUSTOMER")
 @Controller
 @RequestMapping("/cart")
+@Secured("ROLE_CUSTOMER")
 public class CartController {
     @Autowired
     CartItemService cartItemService;
@@ -35,8 +34,8 @@ public class CartController {
     @PostMapping("/add/{id}")
     public String addItemToCart(@PathVariable("id") Long productId) {
         Authentication authedUser = authenticationFacade.getAuthentication();
-        Optional<UserEntity> user = userEntityService.findByEmail(authedUser.getName());
-
+        Optional<UserEntityDto> user = userEntityService.findByEmail(authedUser.getName());
+    
         if (user.isEmpty()) {
             return "redirect:/" + "products/" + productId.toString() + "?unauthenticated";
         }
@@ -52,7 +51,7 @@ public class CartController {
     @PostMapping("/remove/{id}")
     public String deleteItemFromCart(@PathVariable("id") Long productId) {
         Authentication authedUser = authenticationFacade.getAuthentication();
-        Optional<UserEntity> user = userEntityService.findByEmail(authedUser.getName());
+        Optional<UserEntityDto> user = userEntityService.findByEmail(authedUser.getName());
         String returnToProductEndpoint = "redirect:/" + "cart/" + "view";
 
         if (user.isEmpty()) {
@@ -64,14 +63,9 @@ public class CartController {
     }
 
     @GetMapping("/view")
-    public String viewCart(Model model, HttpServletRequest request) {
+    public String viewCart(Model model) {
         Authentication authedUser = authenticationFacade.getAuthentication();
-        Optional<UserEntity> user = userEntityService.findByEmail(authedUser.getName());
-        String returnToPreviousEndPoint = "redirect:/" + request.getHeader("Referer");;
-
-        if(user.isEmpty()) {
-            return returnToPreviousEndPoint;
-        }
+        Optional<UserEntityDto> user = userEntityService.findByEmail(authedUser.getName());
 
         List<ProductDto> cartItems = cartItemService.getAllCartItems(user.get().getId());
         if(cartItems.isEmpty()) {
@@ -84,7 +78,6 @@ public class CartController {
             cartTotal += cartItems.get(i).getPrice();
         }
 
-        System.out.println(cartItems.size());
         model.addAttribute("cartItems", cartItems);
         model.addAttribute("cartTotal", cartTotal);
         return "view-cart";

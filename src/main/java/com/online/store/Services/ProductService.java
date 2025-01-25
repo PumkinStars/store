@@ -9,9 +9,11 @@ import java.util.Optional;
 
 public interface ProductService {
     List<ProductDto> findAll();
+    Optional<ProductDto> findByIdAsDto(Long id);
     Optional<Product> findById(Long id);
     Optional<Product> findByName(String name);
-    void saveProduct(ProductDto productDto);
+    Optional<ProductDto> findByNameAsDto(String name);
+    Product saveProduct(ProductDto productDto);
     ProductDto productToDto(Product product);
     Product dtoToProduct(ProductDto productDto);
 }

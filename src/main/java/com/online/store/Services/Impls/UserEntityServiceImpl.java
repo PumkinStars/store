@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,34 +23,55 @@ public class UserEntityServiceImpl implements UserEntityService {
     @Override
     public UserEntity saveUser(UserEntityDto user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userEntityRepository.save(dtoToEntity(user));
+        return userEntityRepository.save(dtoToUserEntity(user));
     }
 
     @Override
-    public Optional<UserEntity> findById(Long id) {
-        return userEntityRepository.findById(id);
+    public Optional<UserEntityDto> findById(Long id) {
+        Optional<UserEntity> user = userEntityRepository.findById(id);
+        return user.map(this::userToDto);
     }
 
     @Override
-    public Optional<UserEntity> findByUsername(String username) {
-        return userEntityRepository.findByUsername(username);
+    public Optional<UserEntityDto> findByUsername(String username) {
+        Optional<UserEntity> user = userEntityRepository.findByUsername(username);
+        return user.map(this::userToDto);
     }
 
     @Override
-    public Optional<UserEntity> findByEmail(String email) {
-        return userEntityRepository.findByEmail(email);
+    public List<UserEntityDto> findAll() {
+        List<UserEntity> allUsers = userEntityRepository.findAll();
+        return allUsers.stream().map(this::userToDto).toList();
     }
 
     @Override
-    public UserEntity dtoToEntity(UserEntityDto dto) {
+    public Optional<UserEntityDto> findByEmail(String email) {
+        Optional<UserEntity> user = userEntityRepository.findByEmail(email);
+        return user.map(this::userToDto);
+    }
+
+    @Override
+    public UserEntity dtoToUserEntity(UserEntityDto dto) {
         if(dto.getRoles() == null) {
             dto.setRoles("CUSTOMER");
         }
         return UserEntity.builder()
+                .id(dto.getId())
                 .username(dto.getUsername())
                 .password(dto.getPassword())
                 .email(dto.getEmail())
                 .roles(dto.getRoles())
+                .build();
+    }
+
+    @Override
+    public UserEntityDto userToDto(UserEntity user) {
+        return UserEntityDto.builder()
+                .id(user.getId())
+                .username(user.getUsername())
+                .password(user.getPassword())
+                .email(user.getEmail())
+                .roles(user.getRoles())
                 .build();
     }
 

@@ -17,7 +17,9 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+@EnableMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true)
 public class SecurityConfiguration {
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
@@ -27,8 +29,8 @@ public class SecurityConfiguration {
        return httpSecurity
                .csrf(AbstractHttpConfigurer::disable)
                .authorizeHttpRequests(registry -> {
-                   registry.requestMatchers("/", "/css**", "/register/**", "/*.css", "/resources/**", "/products/**", "/static**").permitAll();
-                   registry.requestMatchers("/admin/**", "/products/admin/**").hasRole("ADMIN");
+                   registry.requestMatchers("/", "/css**", "/register/**", "/login", "/*.css", "/resources/**", "/products/**", "/static**").permitAll();
+                   registry.requestMatchers("/admin/**").hasRole("ADMIN");
                    registry.requestMatchers("/cart**").hasRole("CUSTOMER");
                    /// TODO: Fix the css for non-authenticated users to remove this security risk.
                    registry.anyRequest().permitAll();

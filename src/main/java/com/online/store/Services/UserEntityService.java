@@ -1,15 +1,17 @@
 package com.online.store.Services;
 
-import com.online.store.Models.UserEntity;
 import com.online.store.Models.Dtos.UserEntityDto;
+import com.online.store.Models.UserEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserEntityService {
     UserEntity saveUser(UserEntityDto user);
-    Optional<UserEntity> findById(Long id);
-    Optional<UserEntity> findByUsername(String username);
-    Optional<UserEntity> findByEmail(String email);
-    UserEntity dtoToEntity(UserEntityDto dto);
-
+    Optional<UserEntityDto> findById(Long id);
+    Optional<UserEntityDto> findByUsername(String username);
+    List<UserEntityDto> findAll();
+    Optional<UserEntityDto> findByEmail(String email);
+    UserEntity dtoToUserEntity(UserEntityDto dto);
+    UserEntityDto userToDto(UserEntity user);
 }

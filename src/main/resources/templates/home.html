@@ -1,20 +1,106 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>The Vibe</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-          rel="stylesheet"
-          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>e-commerce website</title>
 
-</head>
-<body>
-<nav th:replace="~{fragments/navbar :: navbar}"></nav>
-<br /><br /><br />
-<div class="container">
-    <section th:replace="~{fragments/product-display :: productDisplay(productList=${products})}"></section>
-</div>
-</body>
+    <!-- font-awesome cdn link -->
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+
+    <!-- custom css file link -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles.css}" />
+  </head>
+  <body>
+    <section th:replace="~{fragments/navbar :: navbar}"></section>
+
+    <section id="hero">
+      <h4>Trade-in-offer</h4>
+      <h2>Super value deals</h2>
+      <h1>On all products</h1>
+      <p>Save more with coupons & up to 70% off!</p>
+      <button>Shop Now</button>
+    </section>
+
+    <section id="feature" class="section-p1">
+      <div class="fe-box">
+        <img th:src="@{/images/features/f1.png}" alt="" />
+        <h6>Free Shipping</h6>
+      </div>
+      <div class="fe-box">
+        <img src="images/features/f2.png" alt="" />
+        <h6>Online Order</h6>
+      </div>
+      <div class="fe-box">
+        <img th:src="@{/images/features/f3.png}" alt="" />
+        <h6>Save Money</h6>
+      </div>
+      <div class="fe-box">
+        <img th:src="@{/images/features/f4.png}" alt="" />
+        <h6>Promotions</h6>
+      </div>
+      <div class="fe-box">
+        <img th:src="@{/images/features/f5.png}" alt="" />
+        <h6>Happy Sell</h6>
+      </div>
+      <div class="fe-box">
+        <img th:src="@{/images/features/f6.png}" alt="" />
+        <h6>F24/7 Support</h6>
+      </div>
+    </section>
+
+    <section
+      th:replace="~{fragments/product-display :: productDisplay(productList=${products})}"
+    ></section>
+
+    <section id="banner" class="section-m1">
+      <h4>Repair Services</h4>
+      <h2>Up to <span>70% Off</span> - All t-Shirts & Accessories</h2>
+      <button class="normal">Explore More</button>
+    </section>
+
+    <section
+      th:replace="~{fragments/product-display :: productDisplay(productList=${products})}"
+    ></section>
+
+    <section id="sm-banner" class="section-p1">
+      <div class="banner-box">
+        <h4>crazy deals</h4>
+        <h2>buy 1 get 1 free</h2>
+        <span>The best classic dress is on sale at cara</span>
+        <button class="white">Learn more</button>
+      </div>
+      <div class="banner-box">
+        <h4>spring/summer</h4>
+        <h2>upcoming season</h2>
+        <span>The best classic dress is on sale at cara</span>
+        <button class="white">Collection</button>
+      </div>
+    </section>
+
+    <section id="banner3">
+      <div class="banner-box">
+        <h2>SEASONAL SALE</h2>
+        <h3>Winter Collection -50% OFF</h3>
+      </div>
+      <div class="banner-box">
+        <h2>NEW FOOTWEAR COLLECTION</h2>
+        <h3>Spring / Summer 2023</h3>
+      </div>
+      <div class="banner-box">
+        <h2>T-SHIRTS</h2>
+        <h3>New Trendy Prints</h3>
+      </div>
+    </section>
+
+    <section th:replace="~{fragments/newsletter :: newsletter}"></section>
+    <section th:replace="~{fragments/footer :: footer}"></section>
+
+    <!-- javascript script file link -->
+    <script th:src="script.js"></script>
+  </body>
 </html>

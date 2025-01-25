@@ -1,31 +1,44 @@
-<!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<nav th:fragment="navbar" class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <div class="container px-5">
-        <a class="navbar-brand" th:href="@{/}">Believe it</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link me-3 btn btn-primary" th:href="@{/users-list}">Users list</a></li>
-                <li class="nav-item"><a class="nav-link me-3 btn btn-primary" th:href="@{/products/new}">New product</a></li>
-                <th:block sec:authorize="!isAuthenticated()">
-                    <li class="nav-item"><a class="nav-link me-3 btn btn-primary" sec:authorize="!isAuthenticated()" th:href="@{/login}">Login</a></li>
-                    <li class="nav-item"><a class="nav-link btn btn-primary" sec:authorize="!isAuthenticated()" th:href="@{/register}">Register</a></li>
-                </th:block>
-                <li class="nav-item"><a class="nav-link btn btn-primary" th:href="@{/cart/view}">Cart</a></li>
-                <li class="nav-item dropdown">
-                    <ul  class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownPortfolio">
-                        <li><a class="dropdown-item" th:href="@{/logout}">Logout</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-</nav>
-</body>
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html
+        lang="en"
+        xmlns:th="http://thymeleaf.org"
+>
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>e-commerce website</title>
+
+    <!-- font-awesome cdn link -->
+    <link
+            rel="stylesheet"
+            href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+
+    <!-- custom css file link -->
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+  </head>
+  <body>
+    <section id="header" th:fragment="navbar">
+      <a th:href="@{/}"><img src="images/logo.png" class="logo" alt="" /></a>
+      <div>
+        <ul id="navbar">
+          <li><a th:href="@{/}">Home</a></li>
+          <li><a class="active" href="shop.html">Shop</a></li>
+          <li><a href="blog.html">Blog</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li id="lg-bag">
+            <a th:href="@{/cart}"><i class="far fa-shopping-bag"></i></a>
+          </li>
+          <a href="#" id="close"><i class="far fa-times"></i></a>
+        </ul>
+      </div>
+      <div id="mobile">
+        <a href="cart.html"><i class="far fa-shopping-bag"></i></a>
+        <i id="bar" class="fas fa-outdent"></i>
+      </div>
+    </section>
+  </body>
 </html>

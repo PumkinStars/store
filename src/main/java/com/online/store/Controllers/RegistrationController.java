@@ -2,7 +2,6 @@ package com.online.store.Controllers;
 
 
 import com.online.store.Models.Dtos.UserEntityDto;
-import com.online.store.Models.UserEntity;
 import com.online.store.Services.UserEntityService;
 import com.online.store.Utility.GlobalEndpoints;
 import jakarta.validation.Valid;
@@ -35,7 +34,7 @@ public class RegistrationController {
             Model model,
             BindingResult result,
             Errors errors) {
-        Optional<UserEntity> duplicateUser =
+        Optional<UserEntityDto> duplicateUser =
                 userEntityService.findByEmail(userDto.getEmail());
 
         if(duplicateUser.isPresent() || result.hasErrors() || errors.hasErrors()) {
@@ -57,11 +56,11 @@ public class RegistrationController {
     @PostMapping("/login/validate")
     public String validateLogin(
             @Valid @ModelAttribute("userObj") UserEntityDto userObj, BindingResult result) {
-        Optional<UserEntity> existingUser = userEntityService.findByEmail(userObj.getEmail());
+        Optional<UserEntityDto> existingUser = userEntityService.findByEmail(userObj.getEmail());
 
         if(result.hasErrors() || existingUser.isEmpty()) {
             return GlobalEndpoints.LOGIN_FAIL.toString();
         }
-        return GlobalEndpoints.HOME_REDIRECT.toString();
+        return GlobalEndpoints.BASE_REDIRECT.toString();
     }
 }

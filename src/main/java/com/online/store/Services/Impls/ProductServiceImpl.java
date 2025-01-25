@@ -24,9 +24,16 @@ public class ProductServiceImpl implements ProductService {
                 .map(this::productToDto)
                 .toList();
     }
+
     @Override
     public Optional<Product> findById(Long id) {
         return productRepository.findById(id);
+    }
+
+    @Override
+    public Optional<ProductDto> findByIdAsDto(Long id) {
+        Optional<Product> product = productRepository.findById(id);
+        return product.map(this::productToDto);
     }
 
     @Override
@@ -35,15 +42,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void saveProduct(ProductDto productdto) {
+    public Optional<ProductDto> findByNameAsDto(String name) {
+        Optional<Product> product = productRepository.findByName(name);
+        return product.map(this::productToDto);
+    }
 
-        productRepository.save(dtoToProduct(productdto));
+    @Override
+    public Product saveProduct(ProductDto productdto) {
+        return productRepository.save(dtoToProduct(productdto));
     }
 
     @Override
     public ProductDto productToDto(Product product) {
         return ProductDto.builder()
                 .id(product.getId())
+                .seller(product.getSeller())
                 .name(product.getName())
                 .description(product.getDescription())
                 .price(product.getPrice())
@@ -56,6 +69,7 @@ public class ProductServiceImpl implements ProductService {
     public Product dtoToProduct(ProductDto productDto) {
         return Product.builder()
                 .id(productDto.getId())
+                .seller(productDto.getSeller())
                 .name(productDto.getName())
                 .availableAmount(productDto.getAvailableAmount())
                 .pictureUrl(productDto.getPictureUrl())

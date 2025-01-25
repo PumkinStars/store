@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @Builder
 public class UserEntityDto {
+    private Long id;
     @NotBlank(message = "Username required")
     private String username;
     @NotBlank(message = "Password required")
