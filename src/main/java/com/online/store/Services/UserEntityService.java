@@ -13,5 +13,7 @@ public interface UserEntityService {
     List<UserEntityDto> findAll();
     Optional<UserEntityDto> findByEmail(String email);
     UserEntity dtoToUserEntity(UserEntityDto dto);
+    Optional<UserEntity> deleteUserByEmail(String email);
+    Optional<UserEntity> updateUserRoles(Long userId, String roles);
     UserEntityDto userToDto(UserEntity user);
 }

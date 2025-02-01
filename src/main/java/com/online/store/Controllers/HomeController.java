@@ -1,6 +1,7 @@
 package com.online.store.Controllers;
 
 
+import com.online.store.Models.Dtos.CartItemDto;
 import com.online.store.Models.Dtos.ProductDto;
 import com.online.store.Services.ProductOptionImageService;
 import com.online.store.Services.ProductService;
@@ -32,10 +33,11 @@ public class HomeController {
     @GetMapping("/products/{id}")
     public String viewProduct(@PathVariable("id") Long id, Model model) {
         Optional<ProductDto> productToView = productService.findByIdAsDto(id);
-
+        CartItemDto cartItemDto = new CartItemDto();
         if(productToView.isEmpty()) return GlobalEndpoints.HOME.toString();
 
         model.addAttribute("productToView", productToView.get());
+        model.addAttribute("cartItemDto", cartItemDto);
         return GlobalEndpoints.VIEW_PRODUCT_DETAILS.toString();
     }
 }

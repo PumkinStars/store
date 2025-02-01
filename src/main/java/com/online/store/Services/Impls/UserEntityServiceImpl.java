@@ -65,6 +65,20 @@ public class UserEntityServiceImpl implements UserEntityService {
     }
 
     @Override
+    public Optional<UserEntity> deleteUserByEmail(String email) {
+        return userEntityRepository.deleteByEmail(email);
+    }
+
+    @Override
+    public Optional<UserEntity> updateUserRoles(Long userId, String roles) {
+        Optional<UserEntity> user = userEntityRepository.findById(userId);
+        if(user.isEmpty()) return user;
+
+        user.get().setRoles(roles);
+        return Optional.of(userEntityRepository.save(user.get()));
+    }
+
+    @Override
     public UserEntityDto userToDto(UserEntity user) {
         return UserEntityDto.builder()
                 .id(user.getId())
@@ -74,6 +88,4 @@ public class UserEntityServiceImpl implements UserEntityService {
                 .roles(user.getRoles())
                 .build();
     }
-
-
 }

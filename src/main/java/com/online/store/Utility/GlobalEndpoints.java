@@ -66,5 +66,11 @@ public enum GlobalEndpoints {
         public String toString() {
             return "404";
         }
+    },
+    STRIPE_TRANSACTION_FAILED {
+        @Override
+        public String toString() {
+            return "redirect:/api/payment/fail";
+        }
     }
 }

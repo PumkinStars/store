@@ -26,7 +26,6 @@ public class StoreApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(StoreApplication.class, args);
-
 	}
 
 
@@ -63,7 +62,7 @@ public class StoreApplication {
 			double price = Math.random() * 100;
 			DecimalFormat numberFormat = new DecimalFormat("#.00");
 			price = Double.parseDouble(numberFormat.format(price));
-			Integer availAmount = (int) Math.floor(Math.random() * 100);
+			Integer availAmount = (int) (Math.random() * 100);
 
 
 			ProductDto product = ProductDto.builder()

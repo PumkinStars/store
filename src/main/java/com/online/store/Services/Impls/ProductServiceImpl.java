@@ -16,6 +16,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+
+    @Override
+    public Long getAmountFromAvailableStock(Product product, Long amountToTake) {
+        return Math.min(product.getAvailableAmount(), amountToTake);
+    }
+
     @Override
     public List<ProductDto> findAll() {
         List<Product> allProducts = productRepository.findAll();

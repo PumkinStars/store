@@ -27,10 +27,7 @@ public class SellerController {
     @Autowired
     ProductService productService;
 
-    @GetMapping("test")
-    public String tester() {
-        return "Testing text!";
-    }
+
     @GetMapping("/new")
     public String newProduct(Model model) {
         ProductDto newProduct = new ProductDto();

@@ -56,6 +56,20 @@ button.normal {
     transition: 0.2s ease;
 }
 
+#checkout {
+    background-color: #088178;
+    color: #fff;
+    padding: 12px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    padding: 15px 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    transition: 0.2s ease;
+}
+
 button.white {
     font-size: 13px;
     font-weight: 600;

@@ -27,7 +27,7 @@ public class CartItemServiceImpl implements CartItemService {
 
 
     @Override
-    public CartDatabaseMessages addToCart(Long userId, Long productId) {
+    public CartDatabaseMessages addToCart(Long userId, Long productId, Long quantity) {
         Optional<UserEntity> user = userEntityRepository.findById(userId);
 
         if(user.isEmpty()) {
@@ -42,6 +42,7 @@ public class CartItemServiceImpl implements CartItemService {
         CartItem newItem = CartItem.builder()
                 .user(user.get())
                 .product(product.get())
+                .quantity(quantity)
                 .build();
 
         cartItemRepository.save(newItem);
@@ -70,13 +71,12 @@ public class CartItemServiceImpl implements CartItemService {
     }
 
     @Override
-    public List<ProductDto> getAllCartItems(Long userId) {
-        List<CartItem> cartItemIds = cartItemRepository.findAllByUserId(userId);
-        System.out.println(cartItemIds.size());
+    public List<ProductDto> getAllCartItemsAsProductDtos(Long userId) {
+        List<CartItem> cartItems = cartItemRepository.findAllByUserId(userId);
         List<ProductDto> userCartItems = new ArrayList<>();
 
-        for (CartItem cartItemId : cartItemIds) {
-            Optional<Product> itemFromProductId = productService.findById(cartItemId.getProduct().getId());
+        for (CartItem cartItem : cartItems) {
+            Optional<Product> itemFromProductId = productService.findById(cartItem.getProduct().getId());
 
             if(itemFromProductId.isEmpty()){
                 continue;
@@ -85,5 +85,17 @@ public class CartItemServiceImpl implements CartItemService {
         }
 
         return userCartItems;
+    }
+
+    @Override
+    public List<CartItem> getAllCartItems(Long userId) {
+        return cartItemRepository.findAllByUserId(userId);
+
+    }
+
+    @Override
+    public boolean cartItemIsPresent(Long userId, Long productId) {
+        Optional<CartItem> itemIsPresent = cartItemRepository.findByUserIdAndProductId(userId, productId);
+        return itemIsPresent.isPresent();
     }
 }

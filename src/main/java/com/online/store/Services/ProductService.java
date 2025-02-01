@@ -13,6 +13,7 @@ public interface ProductService {
     Optional<Product> findById(Long id);
     Optional<Product> findByName(String name);
     Optional<ProductDto> findByNameAsDto(String name);
+    Long getAmountFromAvailableStock(Product product, Long amountToTake);
     Product saveProduct(ProductDto productDto);
     ProductDto productToDto(Product product);
     Product dtoToProduct(ProductDto productDto);
